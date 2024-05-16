@@ -3,7 +3,12 @@
 
 namespace geometrycentral {
 namespace surface {
-
+/* メッシュのエッジ長に対してmollification操作を行う
+** メッシュの平均エッジ長を求め、指定された相対係数をかけてmollifyDaltaを求める
+** mollifyIntrinsicAbsolute()を呼び出してmollifyDeltaを用いてエッジ長を調整する
+** mollifyIntrinsicAbsolute()では各半稜線について三角不等式が成立するように十分小さなmollifyEpsを計算する
+** 全てのエッジ長にmollifyEpsを加算することでエッジ長を調整する
+*/
 void mollifyIntrinsic(SurfaceMesh& mesh, EdgeData<double>& edgeLengths, double relativeFactor) {
   // Mean edge length
   double edgeSum = 0.;

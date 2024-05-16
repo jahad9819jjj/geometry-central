@@ -7,6 +7,13 @@
 namespace geometrycentral {
 namespace surface {
 
+/* Nicholas Sharp and Keenan Crane, A Laplacian for Nonmanifold Triangle Meshes
+** メッシュと埋め込み形状を入力として、"tufted laplacian"行列と質量行列を計算 
+** 内部的にメッシュのコピーを作成し、intrinsic mollificationを適用し、エッジ長を調整する
+** buildINtrinsicTuftedCover()でメッシュの各面を複製し、エッジ周りで適切に繋ぎ合わせることで"tufted cover"と呼ばれる特殊な形状を構築する
+** flipToDelaunay()でDelaunay条件を満たすようにエッジをフリップする
+** tufted coverに対して, cotangent laplacianと頂点集中質量行列を計算する 
+*/
 std::tuple<SparseMatrix<double>, SparseMatrix<double>>
 buildTuftedLaplacian(SurfaceMesh& mesh, EmbeddedGeometryInterface& geom, double relativeMollificationFactor) {
 

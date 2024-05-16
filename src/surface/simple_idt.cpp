@@ -7,6 +7,13 @@
 namespace geometrycentral {
 namespace surface {
 
+/* メッシュとエッジ長を入力として、Delaunay条件を満たすようにエッジをフリップする
+** フリップ後のエッジ長やフリップすべきかどうかの判定など様々なヘルパー関数を定義している
+** 双極幾何とユークリッド幾何の2種類のフリップ条件に対応する
+** エッジのキューを管理しながら、Delaunay条件を満たさないエッジに対して反復的にフリップ操作を行う
+** フリップによって影響を受ける可能性のある近傍エッジを適切にキューに追加管理することで効率的にDelaunay化を実現
+** Delaunay化:内角の最小値が最大となるような三角形分割, 細長い内角の三角形があるとひしゃげた面になるのをイメージ
+*/
 
 size_t flipToDelaunay(SurfaceMesh& mesh, EdgeData<double>& edgeLengths, FlipType flipType, double delaunayEPS) {
 
